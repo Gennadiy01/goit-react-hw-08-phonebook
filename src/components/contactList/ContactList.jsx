@@ -20,7 +20,7 @@ export const ContactList = () => {
   const FilterValue = useSelector(selectValueFilter);
   console.log(FilterValue);
   // Вычисляем массив контактов которые необходимо отображать в интерфейсе
-  const visibleContacts = getVisibleContacts(contacts, FilterValue);
+  const visibleContacts = getVisibleContacts();
   console.log(visibleContacts);
 
   return (

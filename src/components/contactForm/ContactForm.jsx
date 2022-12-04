@@ -3,14 +3,15 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // Импортируем генератор экшена
 
-import { addContact } from '../../redux/contactsSlice';
+// import { addContact } from '../../redux/contactsSlice';
 import { selectContacts } from '../../redux/selectors';
+import { addContact } from '../../redux/operations';
 
 import css from './ContactForm.module.css';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setNumber] = useState('');
 
   // Получаем ссылку на функцию отправки экшенов
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export const ContactForm = () => {
         setName(value);
         break;
 
-      case 'number':
+      case 'phone':
         setNumber(value);
         break;
       default:
@@ -39,8 +40,8 @@ export const ContactForm = () => {
     );
   };
 
-  const checkNumber = number => {
-    return contacts.find(contact => contact.number === number);
+  const checkNumber = phone => {
+    return contacts.find(contact => contact.phone === phone);
   };
 
   const handleSubmitForm = e => {
@@ -48,10 +49,10 @@ export const ContactForm = () => {
 
     if (checkName(name)) {
       alert(`${name} is already in contacts`);
-    } else if (checkNumber(number)) {
-      alert(`${number} is already in your contacts!`);
+    } else if (checkNumber(phone)) {
+      alert(`${phone} is already in your contacts!`);
     } else {
-      dispatch(addContact(name, number));
+      dispatch(addContact({ name, phone }));
     }
 
     setName('');
@@ -79,11 +80,11 @@ export const ContactForm = () => {
           <input
             className={css.input}
             type="tel"
-            name="number"
+            name="phone"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            value={number}
+            value={phone}
             onChange={handleChange}
           />
         </label>
