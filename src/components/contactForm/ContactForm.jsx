@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { addContact } from '../../redux/contactsSlice';
 import { selectContacts } from '../../redux/selectors';
 import { addContact } from '../../redux/operations';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import css from './ContactForm.module.css';
+import 'react-notifications-component/dist/theme.css';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
@@ -48,9 +50,29 @@ export const ContactForm = () => {
     e.preventDefault();
 
     if (checkName(name)) {
-      alert(`${name} is already in contacts`);
+      // alert(`${name} is already in contacts`);
+      Notify.info(`'${name}' is already in contacts`, {
+        width: '380px',
+        position: 'center-top',
+        borderRadius: '5px',
+        clickToClose: true,
+        timeout: 3000,
+        fontSize: '20px',
+        backgroundColor: '#b1ceef',
+        showOnlyTheLastOne: true,
+      });
     } else if (checkNumber(phone)) {
-      alert(`${phone} is already in your contacts!`);
+      // alert(`${phone} is already in your contacts!`);
+      Notify.info(`${phone} is already in your contacts!`, {
+        width: '380px',
+        position: 'center-top',
+        borderRadius: '5px',
+        clickToClose: true,
+        timeout: 3000,
+        fontSize: '20px',
+        background: '#b1ceef',
+        showOnlyTheLastOne: true,
+      });
     } else {
       dispatch(addContact({ name, phone }));
     }

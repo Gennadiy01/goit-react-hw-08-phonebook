@@ -15,8 +15,21 @@
   color: white;
 }
 
+.listTitle {
+  margin: 20px 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: white;
+}
+
 .load {
   font-size: 32px;
   font-weight: 700;
+  color: white;
+}
+
+.blankSheet {
+  font-size: 20px;
+  font-weight: 400;
   color: white;
 }

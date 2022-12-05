@@ -27,11 +27,18 @@ export const App = () => {
     <div className={css.wrapper}>
       <h1 className={css.title}>Phonebook</h1>
       <ContactForm />
+      <h2 className={css.listTitle}>Contacts</h2>
       {contactsLength > 1 && <Filter />}
       {isLoading && !error && (
         <span className={css.load}>Request in progress...</span>
       )}
-      {contactsLength > 0 && <ContactList />}
+      {contactsLength > 0 && !error ? (
+        <ContactList />
+      ) : (
+        <p className={css.blankSheet}>
+          Your phonebook is empty. Please аdd your first contact.
+        </p>
+      )}
     </div>
   );
 };
