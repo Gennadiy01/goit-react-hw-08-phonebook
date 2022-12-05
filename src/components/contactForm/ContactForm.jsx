@@ -9,7 +9,6 @@ import { addContact } from '../../redux/operations';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import css from './ContactForm.module.css';
-import 'react-notifications-component/dist/theme.css';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
