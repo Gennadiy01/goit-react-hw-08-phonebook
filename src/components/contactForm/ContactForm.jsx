@@ -4,20 +4,21 @@ import { useDispatch, useSelector } from 'react-redux';
 // Импортируем генератор экшена
 
 // import { addContact } from '../../redux/contactsSlice';
-import { selectContacts } from '../../redux/selectors';
-import { addContact } from '../../redux/operations';
+import { selectContacts } from '../../redux/contacts/contactsSelectors';
+import { addContact } from '../../redux/contacts/contactsOperations';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import css from './ContactForm.module.css';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
-  const [phone, setNumber] = useState('');
+  const [number, setNumber] = useState('');
 
   // Получаем ссылку на функцию отправки экшенов
   const dispatch = useDispatch();
 
   const contacts = useSelector(selectContacts);
+
   console.log(contacts);
 
   const handleChange = e => {
@@ -27,7 +28,7 @@ export const ContactForm = () => {
         setName(value);
         break;
 
-      case 'phone':
+      case 'number':
         setNumber(value);
         break;
       default:
@@ -41,8 +42,8 @@ export const ContactForm = () => {
     );
   };
 
-  const checkNumber = phone => {
-    return contacts.find(contact => contact.phone === phone);
+  const checkNumber = number => {
+    return contacts.find(contact => contact.number === number);
   };
 
   const handleSubmitForm = e => {
@@ -60,9 +61,9 @@ export const ContactForm = () => {
         backgroundColor: '#b1ceef',
         showOnlyTheLastOne: true,
       });
-    } else if (checkNumber(phone)) {
+    } else if (checkNumber(number)) {
       // alert(`${phone} is already in your contacts!`);
-      Notify.info(`${phone} is already in your contacts!`, {
+      Notify.info(`${number} is already in your contacts!`, {
         width: '380px',
         position: 'center-top',
         borderRadius: '5px',
@@ -73,7 +74,7 @@ export const ContactForm = () => {
         showOnlyTheLastOne: true,
       });
     } else {
-      dispatch(addContact({ name, phone }));
+      dispatch(addContact({ name, number }));
     }
 
     setName('');
@@ -101,11 +102,11 @@ export const ContactForm = () => {
           <input
             className={css.input}
             type="tel"
-            name="phone"
+            name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            value={phone}
+            value={number}
             onChange={handleChange}
           />
         </label>

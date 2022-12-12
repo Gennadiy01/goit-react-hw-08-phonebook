@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import { deleteContact } from '../../redux/operations';
+import { deleteContact } from '../../redux/contacts/contactsOperations';
 
 import css from './ContactItem.module.css';
 
@@ -12,7 +12,7 @@ export const ContactItem = ({ contact }) => {
   return (
     <>
       <span className={css.listText}>{`${contact.name}${': '}`}</span>
-      <span className={css.listText}>{contact.phone}</span>
+      <span className={css.listText}>{contact.number}</span>
       <button
         type="button"
         className={css.listButton}
@@ -26,9 +26,10 @@ export const ContactItem = ({ contact }) => {
 
 ContactItem.propTypes = {
   contact: PropTypes.exact({
-    createdAt: PropTypes.string.isRequired,
+    createdAt: PropTypes.string,
+    // createdAt: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
   }),
 };

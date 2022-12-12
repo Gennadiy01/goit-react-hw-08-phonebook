@@ -1,0 +1,19 @@
+.container {
+  min-height: calc(100vh - 50px);
+  /* height: 100vh; */
+  /* width: 100vw; */
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  padding-left: 100px;
+  /* background-image: url(../../img/telephone_booth.jpg); */
+  background-image: url(../../img/telefonnaya-kniga.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.title {
+  font-weight: 400;
+  font-size: 40px;
+  text-align: centr;
+  color: white;
+}

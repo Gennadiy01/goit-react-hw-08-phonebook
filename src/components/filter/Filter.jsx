@@ -1,5 +1,6 @@
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectValueFilter } from '../../redux/selectors';
+import { selectValueFilter } from '../../redux/contacts/contactsSelectors';
 import { setFilter } from '../../redux/filterSlice';
 import css from './Filter.module.css';
 
@@ -7,9 +8,16 @@ export const Filter = () => {
   const dispatch = useDispatch();
   // Получаем значение фильтра из состояния Redux
   const filter = useSelector(selectValueFilter);
+  console.log(filter);
+
+  // const onChange = e => {
+  //   dispatch(setFilter(e.target.value));
+  // };
 
   const onChange = e => {
-    dispatch(setFilter(e.target.value));
+    const filterValue = e.target.value;
+    console.log(filterValue);
+    dispatch(setFilter(filterValue));
   };
 
   return (

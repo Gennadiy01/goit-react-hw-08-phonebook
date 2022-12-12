@@ -1,44 +1,58 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { selectContacts } from '../redux/selectors';
-import { useEffect } from 'react';
-import { fetchContacts } from '../redux/operations';
-import { selectError, selectIsLoading } from '../redux/selectors';
+import { Route, Routes } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useEffect, lazy, Suspense } from 'react';
+import { refreshUser } from 'redux/auth/authOperations';
+import { AppBar } from 'components/appBar/AppBar';
+import { PrivateRoute } from 'components/PrivateRoute';
+import { RestrictedRoute } from 'components/RestrictedRoute';
+// const HomePage = lazy(() => import('pages/homePage/HomePage'));
+// const ContactsPage = lazy(() => import('pages/contactsPage/ContactsPage'));
+// const LoginPage = lazy(() => import('pages/loginPage/LoginPage'));
+// const RegisterPage = lazy(() => import('pages/registerPage/RegisterPage'));
 
-import { ContactForm } from './contactForm/ContactForm';
-import { Filter } from './filter/Filter';
-import { ContactList } from './contactList/ContactList';
-import css from './App.module.css';
+import { HomePage } from 'pages/homePage/HomePage';
+import { ContactsPage } from 'pages/contactsPage/ContactsPage';
+import { LoginPage } from 'pages/loginPage/LoginPage';
+import { RegisterPage } from 'pages/registerPage/RegisterPage';
+// import { PrivateRoute } from 'components/PrivateRoute';
+// import { RestrictedRoute } from 'components/RestrictedRoute';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  const contacts = useSelector(selectContacts);
-  const contactsLength = contacts.length;
-  console.log(contacts);
-  console.log(contactsLength);
-
   return (
-    <div className={css.wrapper}>
-      <h1 className={css.title}>Phonebook</h1>
-      <ContactForm />
-      <h2 className={css.listTitle}>Contacts</h2>
-      {contactsLength > 1 && <Filter />}
-      {isLoading && !error && (
-        <span className={css.load}>Request in progress...</span>
-      )}
-      {contactsLength > 0 && !error ? (
-        <ContactList />
-      ) : (
-        <p className={css.blankSheet}>
-          Your phonebook is empty. Please аdd your first contact.
-        </p>
-      )}
-    </div>
+    <>
+      <AppBar />
+      {/* <Suspense fallback={null}> */}
+      <Routes>
+        <Route index element={<HomePage />} />
+        <Route
+          path="/register"
+          element={
+            <RestrictedRoute
+              redirectTo="/contacts"
+              component={<RegisterPage />}
+            />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RestrictedRoute redirectTo="/contacts" component={<LoginPage />} />
+          }
+        />
+        <Route
+          path="/contacts"
+          element={
+            <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
+          }
+        />
+      </Routes>
+      {/* </Suspense> */}
+    </>
   );
 };
