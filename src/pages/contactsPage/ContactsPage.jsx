@@ -17,16 +17,18 @@ export const ContactsPage = () => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const contacts = useSelector(selectContacts);
+  console.log(contacts);
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
+  console.log(contacts);
 
   return (
     <div className={css.container}>
       <h1 className={css.title}>Phonebook</h1>
       <ContactForm />
       <h2 className={css.listTitle}>Contacts</h2>
-      {contacts.length > 1 && <Filter />}
+      {contacts.length >= 1 && <Filter />}
       {isLoading && !error && (
         <span className={css.load}>Request in progress...</span>
       )}

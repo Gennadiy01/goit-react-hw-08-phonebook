@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect } from 'react';
 import { refreshUser } from 'redux/auth/authOperations';
 import { AppBar } from 'components/appBar/AppBar';
 import { PrivateRoute } from 'components/PrivateRoute';
@@ -14,6 +14,7 @@ import { HomePage } from 'pages/homePage/HomePage';
 import { ContactsPage } from 'pages/contactsPage/ContactsPage';
 import { LoginPage } from 'pages/loginPage/LoginPage';
 import { RegisterPage } from 'pages/registerPage/RegisterPage';
+import { NotFoundPage } from 'pages/notFoundPage/NotFoundPage';
 // import { PrivateRoute } from 'components/PrivateRoute';
 // import { RestrictedRoute } from 'components/RestrictedRoute';
 
@@ -27,7 +28,7 @@ export const App = () => {
   return (
     <>
       <AppBar />
-      {/* <Suspense fallback={null}> */}
+
       <Routes>
         <Route index element={<HomePage />} />
         <Route
@@ -51,8 +52,9 @@ export const App = () => {
             <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
           }
         />
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
-      {/* </Suspense> */}
     </>
   );
 };
